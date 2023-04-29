@@ -19,8 +19,7 @@ const main = async () => {
   //Usamos el waveContract porque primero se hace el deploy y luego ya puedes interactuar con las funciones dentro del deploy
   //Aqui basicamente estaria en 0 su contenido, primero hace el wave() y ya despues corre wl waveContract()
   await waveContract.getTotalWaves();
-  
-  //
+
   //El valor de la funcion lo almacenamos para monitorearlo
   const waveTxn = await waveContract.wave();
   //Espera a que se complete la transaccion y la confirme la red de ethereum
@@ -28,6 +27,13 @@ const main = async () => {
 
   //Espera a que la transaccion que registra la nueva wave sea confirmada y agregada a la blockchain, antes de mostrar getTotalWaves()
   await waveContract.getTotalWaves();
+  
+  //Sirve para crear un nuevo usuario
+  const secondWaveTxn = await waveContract.connect(randomPerson).wave();
+  await secondWaveTxn.wait();
+
+  await waveContract.getTotalWaves();
+
 };
 
 const runMain = async () => {
